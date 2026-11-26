@@ -144,8 +144,8 @@ export default function PlatformFlowSection() {
     { opacity: avatar3Opacity, rotateX: avatar3RotateX },
   ];
 
-  // 0.92-1.00: "Know more ->" fades in
-  const footerOpacity = useTransform(scrollYProgress, [0.92, 0.98], [0, 1]);
+  // 0.78-0.88: "Know more ->" fades in, then 0.88-1.00 holds completed state
+  const footerOpacity = useTransform(scrollYProgress, [0.78, 0.88], [0, 1]);
 
   // Mobile vertical dashed line
   const mobileLineScaleY = useTransform(mobileProgress, [0, 1], [0, 1]);
@@ -155,10 +155,17 @@ export default function PlatformFlowSection() {
       id="platform-flow"
       ref={wrapperRef}
       aria-labelledby="platform-flow-heading"
-      className={`flow-theme relative w-full overflow-x-clip bg-[var(--flow-bg)] text-[var(--flow-text)] ${
-        shouldReduceMotion ? "py-24" : "py-20 md:h-[380vh] md:pt-20 md:pb-24"
-      }`}
+      className={`flow-theme relative w-full overflow-x-clip bg-[var(--flow-bg)] text-[var(--flow-text)] ${shouldReduceMotion ? "py-24" : "py-20 md:h-[460vh] md:pt-16 md:pb-24"
+        }`}
     >
+      {/* Snap checkpoints for fast scrolling */}
+      {!shouldReduceMotion && (
+        <div aria-hidden="true" className="pointer-events-none hidden md:block">
+          <div className="absolute left-0 top-0 h-px w-px snap-start" />
+          <div className="absolute left-0 top-[76%] h-px w-px snap-start" />
+        </div>
+      )}
+
       {/* Top 80px smooth gradient blend from neighboring light section */}
       <div
         aria-hidden="true"
@@ -173,42 +180,41 @@ export default function PlatformFlowSection() {
 
       {/* Desktop & Tablet Sticky Stage */}
       <div
-        className={`relative z-20 hidden md:flex flex-col justify-center px-6 lg:px-10 ${
-          shouldReduceMotion
-            ? ""
-            : "md:sticky md:top-[var(--header-h,116px)] md:min-h-[calc(100vh-var(--header-h,116px))] md:py-6"
-        }`}
+        className={`relative z-20 hidden md:flex flex-col justify-center px-6 lg:px-10 ${shouldReduceMotion
+          ? ""
+          : "md:sticky md:top-[var(--header-h,116px)] md:h-[calc(100vh-var(--header-h,116px))] md:py-3"
+          }`}
       >
-        <div className="mx-auto w-full max-w-[1200px]">
-          <motion.h2
-            id="platform-flow-heading"
-            style={
-              shouldReduceMotion
-                ? undefined
-                : { opacity: bandOpacity, willChange: "opacity" }
-            }
-            className="font-display mx-auto max-w-3xl text-center text-2xl font-bold tracking-tight text-[var(--flow-text)] lg:text-[2.25rem] lg:leading-[1.15]"
-          >
-            One Platform for the Complete Operations Loop.
-          </motion.h2>
+      <div className="mx-auto w-full max-w-[1200px]">
+        <motion.h2
+          id="platform-flow-heading"
+          style={
+            shouldReduceMotion
+              ? undefined
+              : { opacity: bandOpacity, willChange: "opacity" }
+          }
+          className="font-display mx-auto max-w-3xl text-center text-2xl font-bold tracking-tight text-[var(--flow-text)] lg:text-[2rem] lg:leading-[1.15]"
+        >
+          One Platform for the Complete Operations Loop.
+        </motion.h2>
 
-          {/* Outer Band (radius 48px, padding 40px) */}
-          <motion.div
-            role="region"
-            aria-label="Platform operations loop diagram"
-            style={
-              shouldReduceMotion
-                ? undefined
-                : {
-                    opacity: bandOpacity,
-                    y: bandY,
-                    willChange: "transform, opacity",
-                  }
-            }
-            className="relative mt-10 rounded-[48px] border border-[var(--flow-border)] bg-[var(--flow-surface)] p-6 lg:p-8 xl:p-10"
-          >
-            {/* Loop Container (inset inside outer band) */}
-            <div className="relative px-8 py-10 lg:px-12 lg:py-12">
+        {/* Outer Band (radius 48px) */}
+        <motion.div
+          role="region"
+          aria-label="Platform operations loop diagram"
+          style={
+            shouldReduceMotion
+              ? undefined
+              : {
+                opacity: bandOpacity,
+                y: bandY,
+                willChange: "transform, opacity",
+              }
+          }
+          className="relative mt-8 rounded-[48px] border border-[var(--flow-border)] bg-[var(--flow-surface)] p-5 lg:p-7 xl:p-8"
+        >
+          {/* Loop Container (inset inside outer band) */}
+            <div className="relative px-8 py-9 lg:px-12 lg:py-10">
               {/* Dashed SVG Loop Line */}
               <FlowLoopPath
                 scrollYProgress={scrollYProgress}
@@ -296,12 +302,12 @@ export default function PlatformFlowSection() {
                       shouldReduceMotion
                         ? undefined
                         : {
-                            opacity: avatarMotions[idx].opacity,
-                            rotateX: avatarMotions[idx].rotateX,
-                            transformOrigin: "bottom",
-                            transformPerspective: 800,
-                            willChange: "transform, opacity",
-                          }
+                          opacity: avatarMotions[idx].opacity,
+                          rotateX: avatarMotions[idx].rotateX,
+                          transformOrigin: "bottom",
+                          transformPerspective: 800,
+                          willChange: "transform, opacity",
+                        }
                     }
                     className={`flex h-16 w-16 items-center justify-center rounded-full border-2 border-[var(--flow-surface)] bg-gradient-to-br ${avatar.gradient} font-display text-sm font-bold text-white shadow-md`}
                   >
@@ -310,163 +316,163 @@ export default function PlatformFlowSection() {
                 ))}
               </div>
             </div>
-          </motion.div>
+        </motion.div>
 
-          {/* Active Stage Description Caption + Footer Link */}
-          <div className="mt-10 flex flex-col items-center gap-3 text-center">
-            <p className="type-body min-h-[28px] text-[var(--flow-muted)]">
-              <span className="font-semibold text-[var(--flow-green-bright)]">
-                {FLOW_STAGES[activeStageIndex]?.title}:
-              </span>{" "}
-              {FLOW_STAGES[activeStageIndex]?.description}
-            </p>
-            <motion.a
-              href="#industries-heading"
-              style={shouldReduceMotion ? undefined : { opacity: footerOpacity }}
-              className="type-button inline-flex items-center gap-1.5 font-bold text-[var(--flow-green-bright)] transition-colors hover:text-emerald-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--flow-green-bright)]"
-            >
-              Know more <span aria-hidden="true">→</span>
-            </motion.a>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile (<768px): Vertical Timeline with Domino Entrance */}
-      <div className="relative z-20 px-6 py-10 md:hidden">
-        <h2 className="type-section text-center text-[var(--flow-text)]">
-          One Platform for the Complete Operations Loop.
-        </h2>
-
-        <div
-          ref={mobileTimelineRef}
-          className="relative mt-10 rounded-[28px] border border-[var(--flow-border)] bg-[var(--flow-surface)] p-5"
-        >
-          <div className="relative pl-8">
-            {/* Dashed background guide */}
-            <div
-              aria-hidden="true"
-              className="absolute bottom-4 left-3 top-4 w-px border-l border-dashed border-emerald-500/25"
-            />
-            {/* Scroll-drawn dashed green line */}
-            <motion.div
-              aria-hidden="true"
-              style={
-                shouldReduceMotion
-                  ? { scaleY: 1 }
-                  : {
-                      scaleY: mobileLineScaleY,
-                      transformOrigin: "top",
-                      willChange: "transform",
-                    }
-              }
-              className="absolute bottom-4 left-3 top-4 w-0.5 bg-[var(--flow-green)]"
-            />
-
-            <ol className="space-y-4">
-              {FLOW_STAGES.map((stage, idx) => (
-                <motion.li
-                  key={stage.id}
-                  initial={
-                    shouldReduceMotion
-                      ? false
-                      : { opacity: 0, rotateX: 35, y: 24 }
-                  }
-                  whileInView={
-                    shouldReduceMotion
-                      ? undefined
-                      : { opacity: 1, rotateX: 0, y: 0 }
-                  }
-                  viewport={{ once: true, amount: 0.25 }}
-                  transition={
-                    shouldReduceMotion
-                      ? { duration: 0 }
-                      : { duration: 0.4, delay: idx * 0.08, ease: "easeOut" }
-                  }
-                  style={{
-                    transformOrigin: "bottom",
-                    transformPerspective: 800,
-                  }}
-                  className="relative"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="absolute -left-8 top-4 flex h-6 w-6 items-center justify-center rounded-full border border-[var(--flow-green)] bg-[var(--flow-card)] text-[var(--flow-green-bright)]"
-                  >
-                    <ChevronDown className="h-3.5 w-3.5" />
-                  </span>
-                  <div className="rounded-[16px] border border-[var(--flow-border)] bg-[var(--flow-card)] p-4">
-                    <p className="font-display text-sm font-bold text-[var(--flow-green-bright)]">
-                      {stage.title}
-                    </p>
-                    <p className="mt-1 text-xs text-[var(--flow-muted)]">
-                      {stage.description}
-                    </p>
-                  </div>
-                </motion.li>
-              ))}
-            </ol>
-
-            <div className="mt-5 space-y-4">
-              {FLOW_MODULES.map((mod, idx) => (
-                <motion.article
-                  key={mod.id}
-                  initial={
-                    shouldReduceMotion
-                      ? false
-                      : { opacity: 0, rotateX: 35, y: 24 }
-                  }
-                  whileInView={
-                    shouldReduceMotion
-                      ? undefined
-                      : { opacity: 1, rotateX: 0, y: 0 }
-                  }
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={
-                    shouldReduceMotion
-                      ? { duration: 0 }
-                      : {
-                          duration: 0.4,
-                          delay: (FLOW_STAGES.length + idx) * 0.08,
-                          ease: "easeOut",
-                        }
-                  }
-                  style={{
-                    transformOrigin: "bottom",
-                    transformPerspective: 800,
-                  }}
-                  className="relative rounded-[16px] border border-[var(--flow-border)] bg-[var(--flow-card)] p-4"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="absolute -left-8 top-4 flex h-6 w-6 items-center justify-center rounded-full border border-[var(--flow-border)] bg-[var(--flow-card)] text-[var(--flow-green-bright)]"
-                  >
-                    <ChevronDown className="h-3.5 w-3.5" />
-                  </span>
-                  <h3 className="font-display text-sm font-bold text-[var(--flow-text)]">
-                    {mod.title}
-                  </h3>
-                  <div className="mt-3 flex justify-center">
-                    <FlowModuleIllustration
-                      kind={mod.illustration}
-                      progress={mobileProgress}
-                      reducedMotion={true}
-                    />
-                  </div>
-                </motion.article>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-8 text-center">
-          <a
+        {/* Active Stage Description Caption + Footer Link */}
+        <div className="mt-10 flex flex-col items-center gap-3 text-center">
+          <p className="type-body min-h-[28px] text-[var(--flow-muted)]">
+            <span className="font-semibold text-[var(--flow-green-bright)]">
+              {FLOW_STAGES[activeStageIndex]?.title}:
+            </span>{" "}
+            {FLOW_STAGES[activeStageIndex]?.description}
+          </p>
+          <motion.a
             href="#industries-heading"
-            className="type-button inline-flex items-center gap-1.5 font-bold text-[var(--flow-green-bright)]"
+            style={shouldReduceMotion ? undefined : { opacity: footerOpacity }}
+            className="type-button inline-flex items-center gap-1.5 font-bold text-[var(--flow-green-bright)] transition-colors hover:text-emerald-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--flow-green-bright)]"
           >
             Know more <span aria-hidden="true">→</span>
-          </a>
+          </motion.a>
         </div>
       </div>
-    </section>
+    </div>
+
+      {/* Mobile (<768px): Vertical Timeline with Domino Entrance */ }
+  <div className="relative z-20 px-6 py-10 md:hidden">
+    <h2 className="type-section text-center text-[var(--flow-text)]">
+      One Platform for the Complete Operations Loop.
+    </h2>
+
+    <div
+      ref={mobileTimelineRef}
+      className="relative mt-10 rounded-[28px] border border-[var(--flow-border)] bg-[var(--flow-surface)] p-5"
+    >
+      <div className="relative pl-8">
+        {/* Dashed background guide */}
+        <div
+          aria-hidden="true"
+          className="absolute bottom-4 left-3 top-4 w-px border-l border-dashed border-emerald-500/25"
+        />
+        {/* Scroll-drawn dashed green line */}
+        <motion.div
+          aria-hidden="true"
+          style={
+            shouldReduceMotion
+              ? { scaleY: 1 }
+              : {
+                scaleY: mobileLineScaleY,
+                transformOrigin: "top",
+                willChange: "transform",
+              }
+          }
+          className="absolute bottom-4 left-3 top-4 w-0.5 bg-[var(--flow-green)]"
+        />
+
+        <ol className="space-y-4">
+          {FLOW_STAGES.map((stage, idx) => (
+            <motion.li
+              key={stage.id}
+              initial={
+                shouldReduceMotion
+                  ? false
+                  : { opacity: 0, rotateX: 35, y: 24 }
+              }
+              whileInView={
+                shouldReduceMotion
+                  ? undefined
+                  : { opacity: 1, rotateX: 0, y: 0 }
+              }
+              viewport={{ once: true, amount: 0.25 }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : { duration: 0.4, delay: idx * 0.08, ease: "easeOut" }
+              }
+              style={{
+                transformOrigin: "bottom",
+                transformPerspective: 800,
+              }}
+              className="relative"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute -left-8 top-4 flex h-6 w-6 items-center justify-center rounded-full border border-[var(--flow-green)] bg-[var(--flow-card)] text-[var(--flow-green-bright)]"
+              >
+                <ChevronDown className="h-3.5 w-3.5" />
+              </span>
+              <div className="rounded-[16px] border border-[var(--flow-border)] bg-[var(--flow-card)] p-4">
+                <p className="font-display text-sm font-bold text-[var(--flow-green-bright)]">
+                  {stage.title}
+                </p>
+                <p className="mt-1 text-xs text-[var(--flow-muted)]">
+                  {stage.description}
+                </p>
+              </div>
+            </motion.li>
+          ))}
+        </ol>
+
+        <div className="mt-5 space-y-4">
+          {FLOW_MODULES.map((mod, idx) => (
+            <motion.article
+              key={mod.id}
+              initial={
+                shouldReduceMotion
+                  ? false
+                  : { opacity: 0, rotateX: 35, y: 24 }
+              }
+              whileInView={
+                shouldReduceMotion
+                  ? undefined
+                  : { opacity: 1, rotateX: 0, y: 0 }
+              }
+              viewport={{ once: true, amount: 0.2 }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : {
+                    duration: 0.4,
+                    delay: (FLOW_STAGES.length + idx) * 0.08,
+                    ease: "easeOut",
+                  }
+              }
+              style={{
+                transformOrigin: "bottom",
+                transformPerspective: 800,
+              }}
+              className="relative rounded-[16px] border border-[var(--flow-border)] bg-[var(--flow-card)] p-4"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute -left-8 top-4 flex h-6 w-6 items-center justify-center rounded-full border border-[var(--flow-border)] bg-[var(--flow-card)] text-[var(--flow-green-bright)]"
+              >
+                <ChevronDown className="h-3.5 w-3.5" />
+              </span>
+              <h3 className="font-display text-sm font-bold text-[var(--flow-text)]">
+                {mod.title}
+              </h3>
+              <div className="mt-3 flex justify-center">
+                <FlowModuleIllustration
+                  kind={mod.illustration}
+                  progress={mobileProgress}
+                  reducedMotion={true}
+                />
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div className="mt-8 text-center">
+      <a
+        href="#industries-heading"
+        className="type-button inline-flex items-center gap-1.5 font-bold text-[var(--flow-green-bright)]"
+      >
+        Know more <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+    </section >
   );
 }

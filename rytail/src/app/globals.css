@@ -43,6 +43,12 @@
     scroll-behavior: smooth;
   }
 
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-snap-type: y proximity;
+    }
+  }
+
   [id] {
     scroll-margin-top: var(--header-h, 116px);
   }

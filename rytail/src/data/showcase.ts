@@ -71,23 +71,23 @@ export const SHOWCASE_CARDS: ShowcaseCard[] = [
       pills: ["Workflows", "Reports", "Assistant"],
     },
   },
-  {
-    id: "live-report",
-    image: "/images/showcase/showcase-3.jpg",
-    gradient: "from-[#052e16] via-[#065f46] to-[#1e293b]",
-    alt: "Software engineer reviewing performance telemetry on a laptop",
-    caption: "Spot shifts early before they impact revenue.",
-    mockupType: "report",
-    reportData: {
-      title: "Weekly performance",
-      badge: "Live",
-      bars: [42, 58, 48, 72, 66, 92],
-      stats: [
-        { label: "Retention", prefix: "+", value: 12, suffix: "%" },
-        { label: "Response time", prefix: "-", value: 38, suffix: "%" },
-      ],
-    },
-  },
+  // {
+  //   id: "live-report",
+  //   image: "/images/showcase/showcase-3.jpg",
+  //   gradient: "from-[#052e16] via-[#065f46] to-[#1e293b]",
+  //   alt: "Software engineer reviewing performance telemetry on a laptop",
+  //   caption: "Spot shifts early before they impact revenue.",
+  //   mockupType: "report",
+  //   reportData: {
+  //     title: "Weekly performance",
+  //     badge: "Live",
+  //     bars: [42, 58, 48, 72, 66, 92],
+  //     stats: [
+  //       { label: "Retention", prefix: "+", value: 12, suffix: "%" },
+  //       { label: "Response time", prefix: "-", value: 38, suffix: "%" },
+  //     ],
+  //   },
+  // },
   {
     id: "workflow-automation",
     image: "/images/showcase/showcase-4.jpg",

@@ -200,73 +200,73 @@ export default function ScrollHeroSection() {
       }}
     >
       {/* Sticky viewport container: pins hero & cards during scroll, then releases */}
-        <div className="flex flex-col justify-start overflow-x-clip md:sticky md:top-[var(--header-h,116px)] md:min-h-[calc(100vh-var(--header-h,116px))]">
-          {/* Hero Copy */}
-          <div className="mx-auto flex w-full max-w-4xl flex-col items-center px-6 pt-10 text-center sm:pt-14 md:pt-8 lg:pt-10">
-            <h1 className="type-hero max-w-3xl text-white">
-              Intelligence in every interaction
-            </h1>
-            <p className="type-body mt-4 max-w-2xl text-emerald-50/95">
-              Unify live behavioral signals, predictive modeling, and automated
-              orchestration to deliver relevant experiences across every channel.
-            </p>
+      <div className="flex flex-col justify-start overflow-x-clip md:sticky md:top-[var(--header-h,116px)] md:min-h-[calc(100vh-var(--header-h,116px))]">
+        {/* Hero Copy */}
+        <div className="mx-auto flex w-full max-w-4xl flex-col items-center px-6 pt-10 text-center sm:pt-14 md:pt-8 lg:pt-10">
+          <h1 className="type-hero max-w-3xl text-white">
+            Intelligence in every interaction
+          </h1>
+          <p className="type-body mt-4 max-w-2xl text-emerald-50/95">
+            Unify live behavioral signals, predictive modeling, and automated
+            orchestration to deliver relevant experiences across every channel.
+          </p>
 
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-5">
-              <a
-                href="#demo"
-                className="type-button inline-flex items-center justify-center rounded-full bg-[#090d0b] px-7 py-3.5 text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-800"
-              >
-                Get a Demo
-              </a>
-              <a
-                href="#platform"
-                className="type-button inline-flex items-center gap-1.5 px-2 py-2 text-white/95 transition-colors hover:text-white"
-              >
-                Explore Rytail AI <span aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-
-          {/* Desktop & Tablet Scroll-Scrubbed Card Row */}
-          <div className="mx-auto mt-8 hidden w-full max-w-[1380px] px-6 pb-8 md:block lg:mt-10 lg:px-10 lg:pb-10">
-            <div className="flex items-stretch justify-center gap-[30px]">
-              {RESOURCE_CARDS.map((card, index) => {
-                // Tablet (md): 3 cards visible (indices 1, 2, 3); Desktop (lg): all 5 cards
-                const tabletVisibility =
-                  index === 0 || index === 4 ? "hidden lg:block" : "block";
-
-                return (
-                  <ScrubbedDesktopCard
-                    key={card.id}
-                    card={card}
-                    scrollYProgress={scrollYProgress}
-                    reducedMotion={shouldReduceMotion}
-                    className={tabletVisibility}
-                  />
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Mobile Horizontal Scroll-Snap Carousel with Reduced Fan Effect */}
-          <div className="mt-12 w-full pb-12 md:hidden">
-            <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {RESOURCE_CARDS.map((card) => (
-                <div
-                  key={card.id}
-                  style={{
-                    transform: shouldReduceMotion
-                      ? "none"
-                      : `rotate(${card.mobileRotate}deg)`,
-                  }}
-                  className="w-[78vw] max-w-[300px] shrink-0 snap-center"
-                >
-                  <CardBody card={card} />
-                </div>
-              ))}
-            </div>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-5">
+            <a
+              href="#demo"
+              className="type-button inline-flex items-center justify-center rounded-full bg-[#090d0b] px-7 py-3.5 text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-800"
+            >
+              Get a Demo
+            </a>
+            <a
+              href="#platform"
+              className="type-button inline-flex items-center gap-1.5 px-2 py-2 text-white/95 transition-colors hover:text-white"
+            >
+              Explore Rytail AI <span aria-hidden="true">→</span>
+            </a>
           </div>
         </div>
+
+        {/* Desktop & Tablet Scroll-Scrubbed Card Row */}
+        <div className="mx-auto mt-8 hidden w-full max-w-[1380px] px-6 pb-8 md:block lg:mt-10 lg:px-10 lg:pb-10">
+          <div className="flex items-stretch justify-center gap-[30px]">
+            {RESOURCE_CARDS.map((card, index) => {
+              // Tablet (md): 3 cards visible (indices 1, 2, 3); Desktop (lg): all 5 cards
+              const tabletVisibility =
+                index === 0 || index === 4 ? "hidden lg:block" : "block";
+
+              return (
+                <ScrubbedDesktopCard
+                  key={card.id}
+                  card={card}
+                  scrollYProgress={scrollYProgress}
+                  reducedMotion={shouldReduceMotion}
+                  className={tabletVisibility}
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mobile Horizontal Scroll-Snap Carousel with Reduced Fan Effect */}
+        <div className="mt-12 w-full pb-12 md:hidden">
+          <div className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {RESOURCE_CARDS.map((card) => (
+              <div
+                key={card.id}
+                style={{
+                  transform: shouldReduceMotion
+                    ? "none"
+                    : `rotate(${card.mobileRotate}deg)`,
+                }}
+                className="w-[78vw] max-w-[300px] shrink-0 snap-center"
+              >
+                <CardBody card={card} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

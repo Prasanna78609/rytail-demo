@@ -70,14 +70,23 @@ export default function OutcomesShowcase() {
           setIsPaused(false);
         }
       }}
-      className={`relative box-border w-full overflow-x-clip bg-white [&_*]:box-border ${shouldReduceMotion ? "py-10 lg:py-14" : "py-10 lg:h-[240vh] lg:py-0"
+      className={`relative box-border w-full overflow-x-clip bg-white [&_*]:box-border ${shouldReduceMotion ? "py-10 lg:py-14" : "py-10 lg:h-[360vh] lg:py-0"
         }`}
     >
+      {/* Snap checkpoints for each outcome tab when scrolling */}
+      {!shouldReduceMotion && (
+        <div aria-hidden="true" className="pointer-events-none hidden lg:block">
+          <div className="absolute left-0 top-0 h-px w-px snap-start" />
+          <div className="absolute left-0 top-[34%] h-px w-px snap-start" />
+          <div className="absolute left-0 top-[68%] h-px w-px snap-start" />
+        </div>
+      )}
+
       <div
         className={`mx-auto box-border w-full max-w-[1280px] px-[24px] md:px-[32px] lg:px-[48px] ${shouldReduceMotion
-            ? ""
-            : "lg:sticky lg:top-[var(--header-h,116px)] lg:pt-8"
-        }`}
+          ? ""
+          : "lg:sticky lg:top-[var(--header-h,116px)] lg:pt-8"
+          }`}
       >
         <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(240px,0.28fr)_minmax(0,1fr)] lg:gap-x-[clamp(24px,3.5vw,48px)]">
           <div className="min-w-0 w-full">

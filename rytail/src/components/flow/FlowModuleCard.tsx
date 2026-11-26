@@ -12,10 +12,10 @@ interface FlowModuleCardProps {
 }
 
 const MODULE_WINDOWS: [number, number, number][] = [
-  [0.62, 0.69, 0.72],
-  [0.68, 0.75, 0.78],
-  [0.74, 0.81, 0.84],
-  [0.8, 0.87, 0.9],
+  [0.54, 0.6, 0.63],
+  [0.59, 0.65, 0.68],
+  [0.64, 0.7, 0.73],
+  [0.69, 0.75, 0.78],
 ];
 
 export function FlowModuleCard({
@@ -24,7 +24,7 @@ export function FlowModuleCard({
   scrollYProgress,
   reducedMotion,
 }: FlowModuleCardProps) {
-  const [start, mid, end] = MODULE_WINDOWS[index] ?? [0.62, 0.69, 0.72];
+  const [start, mid, end] = MODULE_WINDOWS[index] ?? [0.54, 0.6, 0.63];
 
   const opacity = useTransform(scrollYProgress, [start, end], [0, 1]);
   const rotateX = useTransform(scrollYProgress, [start, mid, end], [35, -3, 0]);
@@ -36,15 +36,15 @@ export function FlowModuleCard({
         reducedMotion
           ? undefined
           : {
-              opacity,
-              rotateX,
-              y,
-              transformOrigin: "bottom",
-              transformPerspective: 800,
-              willChange: "transform, opacity",
-            }
+            opacity,
+            rotateX,
+            y,
+            transformOrigin: "bottom",
+            transformPerspective: 800,
+            willChange: "transform, opacity",
+          }
       }
-      className="flex h-[220px] w-full flex-col items-center justify-between rounded-[16px] border border-[var(--flow-border)] bg-[var(--flow-card)] p-5 text-center lg:h-[250px] lg:w-[220px] xl:h-[280px]"
+      className="flex h-[200px] w-full flex-col items-center justify-between rounded-[16px] border border-[var(--flow-border)] bg-[var(--flow-card)] p-4 text-center lg:h-[215px] lg:w-[215px] xl:h-[245px] xl:w-[220px] xl:p-5"
     >
       <h3 className="font-display text-[15px] font-bold leading-snug text-[var(--flow-text)]">
         {module.title}
