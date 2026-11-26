@@ -33,10 +33,10 @@ function SegmentArrow({
           reducedMotion
             ? undefined
             : {
-              opacity,
-              scale,
-              transformOrigin: "0px 0px",
-            }
+                opacity,
+                scale,
+                transformOrigin: "0px 0px",
+              }
         }
       />
     </g>
@@ -48,10 +48,7 @@ export function FlowLoopPath({
   scrollYProgress,
   reducedMotion,
 }: FlowLoopPathProps) {
-  const topRef = useRef<SVGPathElement>(null);
-  const rightRef = useRef<SVGPathElement>(null);
-  const bottomRef = useRef<SVGPathElement>(null);
-  const leftRef = useRef<SVGPathElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
 
   // Each segment has its own 0..1 progress ramp
   const topProgress = useTransform(scrollYProgress, [0.12, 0.34], [0, 1]);
@@ -69,16 +66,13 @@ export function FlowLoopPath({
   // Dev-only verification that each arrowhead anchor lies within 1px of its segment path
   useEffect(() => {
     if (process.env.NODE_ENV !== "development") return;
-
-    const pathRefs: Record<ArrowAnchor["segment"], SVGPathElement | null> = {
-      top: topRef.current,
-      right: rightRef.current,
-      bottom: bottomRef.current,
-      left: leftRef.current,
-    };
+    const svgEl = svgRef.current;
+    if (!svgEl) return;
 
     for (const arrow of geometry.arrows) {
-      const pathEl = pathRefs[arrow.segment];
+      const pathEl = svgEl.querySelector<SVGPathElement>(
+        `path[data-segment="${arrow.segment}"]`
+      );
       if (!pathEl || typeof pathEl.getTotalLength !== "function") continue;
       const total = pathEl.getTotalLength();
       if (total <= 0) continue;
@@ -105,26 +99,16 @@ export function FlowLoopPath({
     key: ArrowAnchor["segment"];
     d: string;
     progress: MotionValue<number>;
-    ref: React.RefObject<SVGPathElement | null>;
   }> = [
-      { key: "top", d: geometry.paths.top, progress: topProgress, ref: topRef },
-      {
-        key: "right",
-        d: geometry.paths.right,
-        progress: rightProgress,
-        ref: rightRef,
-      },
-      {
-        key: "bottom",
-        d: geometry.paths.bottom,
-        progress: bottomProgress,
-        ref: bottomRef,
-      },
-      { key: "left", d: geometry.paths.left, progress: leftProgress, ref: leftRef },
-    ];
+    { key: "top", d: geometry.paths.top, progress: topProgress },
+    { key: "right", d: geometry.paths.right, progress: rightProgress },
+    { key: "bottom", d: geometry.paths.bottom, progress: bottomProgress },
+    { key: "left", d: geometry.paths.left, progress: leftProgress },
+  ];
 
   return (
     <svg
+      ref={svgRef}
       aria-hidden="true"
       viewBox={`0 0 ${geometry.width} ${geometry.heightFull}`}
       width={geometry.width}
