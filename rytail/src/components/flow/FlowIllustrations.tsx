@@ -27,22 +27,19 @@ export function AnalyticsIllustration({
       style={reducedMotion ? undefined : { y: layerY, opacity }}
       className="flex flex-col items-center gap-1.5"
     >
-      {/* 2x3 Grid of Avatar Tiles */}
       <div className="grid grid-cols-3 gap-1.5 rounded-xl border border-[var(--flow-border)] bg-[#0A100D] p-2.5">
         {tileInitials.map((ch, idx) => (
           <span
             key={ch}
-            className={`flex h-6 w-6 items-center justify-center rounded-md text-[10px] font-bold ${
-              idx % 2 === 0
-                ? "bg-emerald-500/20 text-[var(--flow-green-bright)]"
-                : "bg-emerald-950/80 text-emerald-300"
-            }`}
+            className={`flex h-6 w-6 items-center justify-center rounded-md text-[10px] font-bold ${idx % 2 === 0
+              ? "bg-emerald-500/20 text-[var(--flow-green-bright)]"
+              : "bg-emerald-950/80 text-emerald-300"
+              }`}
           >
             {ch}
           </span>
         ))}
       </div>
-      {/* Stacked Green Layers */}
       <div className="h-2 w-24 rounded-md border border-emerald-500/30 bg-emerald-500/20" />
       <div className="h-1.5 w-16 rounded-md border border-emerald-500/20 bg-emerald-500/10" />
     </motion.div>
@@ -53,8 +50,8 @@ export function ExperimentationIllustration({
   progress,
   reducedMotion,
 }: IllustrationProps) {
-  const bubbleY1 = useTransform(progress, [0.72, 0.94], [8, -6]);
-  const bubbleY2 = useTransform(progress, [0.74, 0.94], [10, -8]);
+  const bubbleY1 = useTransform(progress, [0.72, 0.92], [8, -6]);
+  const bubbleY2 = useTransform(progress, [0.74, 0.92], [10, -8]);
 
   return (
     <div
@@ -104,20 +101,20 @@ export function PersonalizationIllustration({
     <motion.div
       aria-hidden="true"
       style={reducedMotion ? undefined : { scale }}
-      className="flex items-center justify-center -space-x-2"
+      className="flex items-center justify-center -space-x-1.5"
     >
       {FLOW_PERSONALIZATION_AVATARS.map((avatar, idx) => {
-        const isCenter = idx === 2 || idx === 3;
+        const isMiddle = idx === 2;
         return (
           <span
             key={avatar.initials}
             className={`flex items-center justify-center rounded-full border-2 border-[var(--flow-card)] bg-gradient-to-br ${
               avatar.gradient
             } font-bold text-white shadow-sm ${
-              isCenter ? "z-10 h-10 w-10 text-xs" : "h-7 w-7 text-[9px]"
+              isMiddle ? "z-10 h-11 w-11 text-xs" : "h-8 w-8 text-[0px]"
             }`}
           >
-            {avatar.initials}
+            {isMiddle ? avatar.initials : ""}
           </span>
         );
       })}
@@ -129,7 +126,7 @@ export function OrchestrationIllustration({
   progress,
   reducedMotion,
 }: IllustrationProps) {
-  const opacity = useTransform(progress, [0.8, 0.94], [0.25, 1]);
+  const opacity = useTransform(progress, [0.8, 0.92], [0.25, 1]);
 
   const channels = [
     { key: "bell", Icon: Bell },
@@ -144,12 +141,10 @@ export function OrchestrationIllustration({
       style={reducedMotion ? undefined : { opacity }}
       className="flex flex-col items-center"
     >
-      {/* Input Node */}
       <div className="h-3.5 w-3.5 rounded-full border-2 border-[var(--flow-green-bright)] bg-emerald-500/30" />
       <div className="h-3 w-px border-l border-dashed border-emerald-500/60" />
       <div className="h-px w-32 border-t border-dashed border-emerald-500/60" />
 
-      {/* 4 Channel Tiles */}
       <div className="mt-1.5 grid grid-cols-4 gap-1.5">
         {channels.map(({ key, Icon }) => (
           <span
