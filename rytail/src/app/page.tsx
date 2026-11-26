@@ -1,39 +1,63 @@
-import CaseStudiesSection from "@/components/case-studies/CaseStudiesSection";
-import Footer from "@/components/Footer";
-import PlatformFlowSection from "@/components/flow/PlatformFlowSection";
-import IndustryStackSection from "@/components/industries/IndustryStackSection";
+import dynamic from "next/dynamic";
 import ScrollHeroSection from "@/components/ScrollHeroSection";
-import ShowcaseSection from "@/components/showcase/ShowcaseSection";
+import PlatformOverview from "@/components/landing/PlatformOverview";
+import TrustStrip from "@/components/landing/TrustStrip";
+import OutcomesShowcase from "@/components/outcomes/OutcomesShowcase";
+
+const PlatformFlowSection = dynamic(
+  () => import("@/components/flow/PlatformFlowSection")
+);
+const ShowcaseSection = dynamic(
+  () => import("@/components/showcase/ShowcaseSection")
+);
+const IndustryStackSection = dynamic(
+  () => import("@/components/industries/IndustryStackSection")
+);
+const MetricsStrip = dynamic(
+  () => import("@/components/landing/MetricsStrip")
+);
+const CaseStudiesSection = dynamic(
+  () => import("@/components/case-studies/CaseStudiesSection")
+);
+const SecurityStrip = dynamic(
+  () => import("@/components/landing/SecurityStrip")
+);
+const FAQSection = dynamic(() => import("@/components/landing/FAQSection"));
+const FinalCTA = dynamic(() => import("@/components/landing/FinalCTA"));
+const Footer = dynamic(() => import("@/components/Footer"));
 
 export default function Home() {
   return (
     <main className="min-h-screen w-full bg-white font-primary text-[#090d0b]">
       <ScrollHeroSection />
 
-      {/* Product Ecosystem / Platform Overview */}
-      <section
-        id="platform"
-        className="mx-auto flex w-full max-w-5xl flex-col items-center px-6 py-24 text-center"
-      >
-        <span className="type-label rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1 text-emerald-800">
-          Autonomous Customer Platform
-        </span>
-        <h2 className="type-section mt-4 max-w-2xl text-[#090d0b]">
-          Built for teams that act on live customer context
-        </h2>
-        <p className="type-body mt-4 max-w-xl text-zinc-600">
-          Connect streaming product events, warehouse audiences, and cross-channel
-          messaging in a single low-latency engine.
-        </p>
-      </section>
+      <TrustStrip />
 
-      <PlatformFlowSection />
+      <PlatformOverview />
 
-      <IndustryStackSection />
+      <OutcomesShowcase />
 
-      <CaseStudiesSection />
+      <div id="how-it-works">
+        <PlatformFlowSection />
+      </div>
 
       <ShowcaseSection />
+
+      <div id="industries">
+        <IndustryStackSection />
+      </div>
+
+      <MetricsStrip />
+
+      <div id="stories">
+        <CaseStudiesSection />
+      </div>
+
+      <SecurityStrip />
+
+      <FAQSection />
+
+      <FinalCTA />
 
       <Footer />
     </main>

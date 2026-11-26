@@ -27,8 +27,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rytail",
-  description: "Rytail",
+  title: "Rytail — Autonomous Customer Engagement & Workflow Platform",
+  description:
+    "Unify streaming product events, predictive decisioning, and cross-channel messaging in a single low-latency enterprise platform.",
+  openGraph: {
+    title: "Rytail — Autonomous Customer Engagement & Workflow Platform",
+    description:
+      "Unify streaming product events, predictive decisioning, and cross-channel messaging in a single low-latency enterprise platform.",
+    type: "website",
+    siteName: "Rytail",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

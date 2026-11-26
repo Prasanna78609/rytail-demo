@@ -155,7 +155,7 @@ export default function PlatformFlowSection() {
       id="platform-flow"
       ref={wrapperRef}
       aria-labelledby="platform-flow-heading"
-      className={`flow-theme relative w-full bg-[var(--flow-bg)] text-[var(--flow-text)] ${
+      className={`flow-theme relative w-full overflow-x-clip bg-[var(--flow-bg)] text-[var(--flow-text)] ${
         shouldReduceMotion ? "py-24" : "py-20 md:h-[380vh] md:pt-20 md:pb-24"
       }`}
     >

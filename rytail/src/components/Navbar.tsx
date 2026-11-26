@@ -102,7 +102,7 @@ export default function Navbar() {
           {/* Center: Desktop Navigation */}
           <nav
             aria-label="Primary navigation"
-            className="hidden items-center gap-1 lg:flex"
+            className="hidden items-center gap-0.5 xl:gap-1 lg:flex"
           >
             {NAV_DROPDOWNS.map((item) => {
               const isOpen = openDropdownId === item.id;
@@ -130,7 +130,7 @@ export default function Navbar() {
                     onClick={() =>
                       setOpenDropdownId(isOpen ? null : item.id)
                     }
-                    className={`type-nav inline-flex cursor-pointer items-center gap-1 rounded-lg px-2.5 py-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 ${isOpen
+                    className={`type-nav inline-flex cursor-pointer items-center gap-0.5 rounded-lg px-2 py-2 text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 xl:gap-1 xl:px-2.5 xl:text-[15px] ${isOpen
                       ? "bg-emerald-50 text-emerald-800"
                       : "text-zinc-700 hover:text-[#090d0b]"
                       }`}
@@ -159,7 +159,7 @@ export default function Navbar() {
               <a
                 key={link.id}
                 href={link.href}
-                className="type-nav rounded-lg px-2.5 py-2 text-zinc-700 transition-colors hover:text-[#090d0b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                className="type-nav rounded-lg px-2 py-2 text-[13px] text-zinc-700 transition-colors hover:text-[#090d0b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 xl:px-2.5 xl:text-[15px]"
               >
                 {link.label}
               </a>
@@ -167,45 +167,45 @@ export default function Navbar() {
           </nav>
 
           {/* Right: Language, Log In, Get a Demo */}
-          <div className="hidden shrink-0 items-center gap-4 lg:flex">
+            <div className="hidden shrink-0 items-center gap-2 xl:gap-4 lg:flex">
+              <button
+                type="button"
+                aria-label="Language: English"
+                className="type-nav inline-flex cursor-pointer items-center gap-1 rounded-lg px-2 py-1.5 text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-[#090d0b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+              >
+                <Globe className="h-4 w-4 text-zinc-500" aria-hidden="true" />
+                <span>EN</span>
+              </button>
+
+              <a
+                href="#login"
+                className="type-nav px-2 py-1.5 text-zinc-700 transition-colors hover:text-[#090d0b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+              >
+                Log In
+              </a>
+
+              <a
+                href="#demo"
+                className="type-button inline-flex items-center justify-center rounded-full bg-emerald-600 px-5 py-2.5 text-white shadow-xs transition-colors hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+              >
+                Get a Demo
+              </a>
+            </div>
+
+            {/* Mobile Hamburger */}
             <button
               type="button"
-              aria-label="Language: English"
-              className="type-nav inline-flex cursor-pointer items-center gap-1 rounded-lg px-2 py-1.5 text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-[#090d0b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open navigation menu"
+              aria-expanded={mobileOpen}
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg text-[#090d0b] transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 lg:hidden"
             >
-              <Globe className="h-4 w-4 text-zinc-500" aria-hidden="true" />
-              <span>EN</span>
+              <Menu className="h-5 w-5" aria-hidden="true" />
             </button>
-
-            <a
-              href="#login"
-              className="type-nav px-2 py-1.5 text-zinc-700 transition-colors hover:text-[#090d0b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
-            >
-              Log In
-            </a>
-
-            <a
-              href="#demo"
-              className="type-button inline-flex items-center justify-center rounded-full bg-emerald-600 px-5 py-2.5 text-white shadow-xs transition-colors hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
-            >
-              Get a Demo
-            </a>
           </div>
-
-          {/* Mobile Hamburger */}
-          <button
-            type="button"
-            onClick={() => setMobileOpen(true)}
-            aria-label="Open navigation menu"
-            aria-expanded={mobileOpen}
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg text-[#090d0b] transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 lg:hidden"
-          >
-            <Menu className="h-5 w-5" aria-hidden="true" />
-          </button>
         </div>
-      </div>
 
-      <MobileDrawer isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
+        <MobileDrawer isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
     </header>
   );
 }

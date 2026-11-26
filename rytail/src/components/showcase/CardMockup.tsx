@@ -48,77 +48,77 @@ export function CardMockup({
       initial={reducedMotion ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={reducedMotion ? { duration: 0 } : { duration: 0.24, ease: "easeOut" }}
-      className="w-[72%] min-w-[250px] max-w-[350px] rounded-[20px] border border-white/15 bg-[#1A1816]/95 p-4 shadow-2xl backdrop-blur-md"
+      className="w-full max-w-[350px] rounded-[20px] border border-white/15 bg-[#1A1816]/95 p-3 shadow-2xl backdrop-blur-md sm:w-[78%] sm:p-4"
     >
-        <div className="flex items-stretch justify-between">
-          {/* 3 White Stacked Pill Options */}
-          <div className="flex flex-1 flex-col justify-between gap-2">
-            {pills.map((pill, idx) => (
-              <motion.div
-                key={pill}
-                initial={reducedMotion ? false : { opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={
-                  reducedMotion
-                    ? { duration: 0 }
-                    : { duration: 0.22, delay: idx * 0.07, ease: "easeOut" }
-                }
-                className="flex h-8 items-center gap-2 rounded-full bg-white px-3.5 text-xs font-semibold text-zinc-900 shadow-xs"
-              >
-                <PillIcon index={idx} />
-                <span className="truncate">{pill}</span>
-              </motion.div>
-            ))}
-          </div>
+      <div className="flex items-stretch justify-between">
+        {/* 3 White Stacked Pill Options */}
+        <div className="flex flex-1 flex-col justify-between gap-2">
+          {pills.map((pill, idx) => (
+            <motion.div
+              key={pill}
+              initial={reducedMotion ? false : { opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={
+                reducedMotion
+                  ? { duration: 0 }
+                  : { duration: 0.22, delay: idx * 0.07, ease: "easeOut" }
+              }
+              className="flex h-8 items-center gap-2 rounded-full bg-white px-3.5 text-xs font-semibold text-zinc-900 shadow-xs"
+            >
+              <PillIcon index={idx} />
+              <span className="truncate">{pill}</span>
+            </motion.div>
+          ))}
+        </div>
 
-          {/* All 3 Curved Connector Lines -> Hub */}
-          <svg
-            viewBox="0 0 44 100"
-            className="h-[112px] w-9 shrink-0"
-            fill="none"
-          >
-            {yPositions.map((y, idx) => {
-              const d = `M 0 ${y} C 22 ${y}, 22 50, 44 50`;
+        {/* All 3 Curved Connector Lines -> Hub */}
+        <svg
+          viewBox="0 0 44 100"
+          className="h-[112px] w-9 shrink-0"
+          fill="none"
+        >
+          {yPositions.map((y, idx) => {
+            const d = `M 0 ${y} C 22 ${y}, 22 50, 44 50`;
             return (
-                  <g key={y}>
-                    <path
-                      d={d}
-                      stroke="rgba(74, 222, 128, 0.2)"
-                      strokeWidth="1.5"
-                    />
-                    <motion.path
-                      d={d}
-                      stroke="#4ADE80"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      initial={reducedMotion ? { pathLength: 1 } : { pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={
-                        reducedMotion
-                          ? { duration: 0 }
-                          : {
-                            duration: 0.45,
-                            delay: 0.14 + idx * 0.1,
-                            ease: "easeOut",
-                          }
+              <g key={y}>
+                <path
+                  d={d}
+                  stroke="rgba(74, 222, 128, 0.2)"
+                  strokeWidth="1.5"
+                />
+                <motion.path
+                  d={d}
+                  stroke="#4ADE80"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  initial={reducedMotion ? { pathLength: 1 } : { pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={
+                    reducedMotion
+                      ? { duration: 0 }
+                      : {
+                        duration: 0.45,
+                        delay: 0.14 + idx * 0.1,
+                        ease: "easeOut",
                       }
-                    />
-                  </g>
-                );
-              })}
-          </svg>
+                  }
+                />
+              </g>
+            );
+          })}
+        </svg>
 
-          {/* Tall Hub Node */}
-          <motion.div
-            animate={
-              reducedMotion
-                ? undefined
-              : {scale: [1, 1.08, 1] }
+        {/* Tall Hub Node */}
+        <motion.div
+          animate={
+            reducedMotion
+              ? undefined
+              : { scale: [1, 1.08, 1] }
           }
           transition={
             reducedMotion
               ? { duration: 0 }
-              : {duration: 0.35, delay: 0.58, ease: "easeOut" }
+              : { duration: 0.35, delay: 0.58, ease: "easeOut" }
           }
           className="flex w-14 shrink-0 items-center justify-center rounded-2xl border-[1.5px] border-emerald-400 bg-emerald-500/10 text-emerald-400 shadow-[0_0_20px_rgba(74,222,128,0.2)]"
         >

@@ -85,6 +85,15 @@ export default function IndustryStackSection() {
             />
           ))}
         </div>
+
+        <div className="mt-10 text-center">
+          <a
+            href="#demo"
+            className="type-button inline-flex items-center gap-1.5 text-sm font-semibold text-[#059669] transition-colors hover:text-[#047857] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#059669]"
+          >
+            Request a Demo <span aria-hidden="true">→</span>
+          </a>
+        </div>
       </div>
     </section>
   );
