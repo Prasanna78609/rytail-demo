@@ -102,7 +102,7 @@ export default function Navbar() {
           {/* Center: Desktop Navigation */}
           <nav
             aria-label="Primary navigation"
-            className="hidden items-center gap-0.5 xl:gap-1 lg:flex"
+            className="hidden items-center gap-1 xl:flex"
           >
             {NAV_DROPDOWNS.map((item) => {
               const isOpen = openDropdownId === item.id;
@@ -167,7 +167,7 @@ export default function Navbar() {
           </nav>
 
           {/* Right: Language, Log In, Get a Demo */}
-            <div className="hidden shrink-0 items-center gap-2 xl:gap-4 lg:flex">
+            <div className="hidden shrink-0 items-center gap-3 xl:flex">
               <button
                 type="button"
                 aria-label="Language: English"
@@ -192,13 +192,13 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Mobile Hamburger */}
+            {/* Mobile & Tablet Hamburger (< 1280px) */}
             <button
               type="button"
               onClick={() => setMobileOpen(true)}
               aria-label="Open navigation menu"
               aria-expanded={mobileOpen}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg text-[#090d0b] transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 lg:hidden"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg text-[#090d0b] transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 xl:hidden"
             >
               <Menu className="h-5 w-5" aria-hidden="true" />
             </button>

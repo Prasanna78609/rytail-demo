@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import {
   motion,
+  useInView,
   useMotionTemplate,
   useMotionValue,
   useSpring,
 } from "motion/react";
 import type { ShowcaseCard } from "@/data/showcase";
-import { CardMockup } from "./CardMockup";
+import { MockupSwitch } from "./mockups/MockupSwitch";
 
 interface ExpandingCardProps {
   card: ShowcaseCard;
@@ -30,6 +31,7 @@ export function ExpandingCard({
   const cardRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const isMobileInView = useInView(cardRef, { once: true, amount: 0.35 });
 
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
@@ -59,7 +61,7 @@ export function ExpandingCard({
       rafRef.current = null;
       const relX = clientX - rect.left;
       const relY = clientY - rect.top;
-      const normX = (relX / rect.width - 0.5) * 2; // -1 to 1
+      const normX = (relX / rect.width - 0.5) * 2;
       const normY = (relY / rect.height - 0.5) * 2;
       rawX.set(-normX * 12);
       rawY.set(-normY * 12);
@@ -74,7 +76,9 @@ export function ExpandingCard({
     rawY.set(0);
   };
 
-  const showExpanded = isMobileLayout ? true : isExpanded;
+  const showExpanded = isMobileLayout
+    ? reducedMotion || isMobileInView
+    : isExpanded;
 
   return (
     <motion.div
@@ -109,11 +113,10 @@ export function ExpandingCard({
           ? { duration: 0 }
           : { type: "spring", stiffness: 220, damping: 28 }
       }
-      className={`relative overflow-hidden rounded-[24px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-600 ${
-        isMobileLayout
+      className={`relative overflow-hidden rounded-[24px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-600 ${isMobileLayout
           ? "aspect-[4/5] w-[80vw] max-w-[360px] shrink-0 snap-center"
           : "h-[520px] min-w-[140px] flex-1 cursor-pointer"
-      }`}
+        }`}
     >
       {/* Full-bleed Image or Gradient Placeholder with Parallax */}
       <motion.div
@@ -165,36 +168,35 @@ export function ExpandingCard({
         className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/75 via-black/20 to-transparent"
       />
 
-      {/* Overlaid UI Mockup Panel (Top-Left) */}
-      <div className="relative z-20 p-5">
-        <CardMockup
-          pills={card.pills}
-          activePill={card.activePill}
-          statusText={card.statusText}
-          isExpanded={showExpanded}
-          reducedMotion={reducedMotion}
-        />
-      </div>
+          {/* Overlaid UI Mockup Panel (Top-Left, 24px inset) */}
+      <div className="relative z-20 p-6">
+          <MockupSwitch
+            card={card}
+            isExpanded={showExpanded}
+            reducedMotion={reducedMotion}
+            isMobileLayout={isMobileLayout}
+          />
+        </div>
 
-      {/* Bottom Serif Caption */}
-      <motion.div
-        initial={false}
-        animate={
-          reducedMotion || isMobileLayout
-            ? { opacity: 1, y: 0 }
-            : showExpanded
-            ? { opacity: 1, y: 0 }
-            : { opacity: 0, y: 12 }
-        }
-        transition={
-          reducedMotion ? { duration: 0 } : { duration: 0.25, ease: "easeOut" }
-        }
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 p-6"
-      >
-        <p className="font-serif text-[22px] leading-[1.2] text-white sm:text-[26px] lg:text-[28px]">
-          {card.caption}
-        </p>
-      </motion.div>
+        {/* Bottom Serif Caption */}
+        <motion.div
+          initial={false}
+          animate={
+            reducedMotion || isMobileLayout
+              ? { opacity: 1, y: 0 }
+              : showExpanded
+                ? { opacity: 1, y: 0 }
+                : { opacity: 0, y: 12 }
+          }
+          transition={
+            reducedMotion ? { duration: 0 } : { duration: 0.25, ease: "easeOut" }
+          }
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 p-6"
+        >
+          <p className="font-serif text-[22px] leading-[1.2] text-white sm:text-[26px] lg:text-[28px]">
+            {card.caption}
+          </p>
+        </motion.div>
     </motion.div>
   );
 }

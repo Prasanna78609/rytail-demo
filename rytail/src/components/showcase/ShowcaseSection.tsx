@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { SHOWCASE_CARDS } from "@/data/showcase";
 import { ExpandingCard } from "./ExpandingCard";
@@ -8,11 +8,26 @@ import { ExpandingCard } from "./ExpandingCard";
 export default function ShowcaseSection() {
   const shouldReduceMotion = Boolean(useReducedMotion());
   const [activeId, setActiveId] = useState<string>(SHOWCASE_CARDS[0].id);
+  const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    };
+  }, []);
+
+  // 150ms debounce to prevent animation replay on quick hover in/out
+  const handleActivate = useCallback((id: string) => {
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    hoverTimerRef.current = setTimeout(() => {
+      setActiveId(id);
+    }, 150);
+  }, []);
 
   return (
     <section
       aria-labelledby="showcase-heading"
-      className="w-full bg-white py-20 sm:py-24"
+      className="w-full overflow-x-clip bg-white py-20 sm:py-24"
     >
       <div className="mx-auto max-w-[1280px] px-6">
         <h2
@@ -29,7 +44,7 @@ export default function ShowcaseSection() {
               key={card.id}
               card={card}
               isExpanded={activeId === card.id}
-              onActivate={() => setActiveId(card.id)}
+              onActivate={() => handleActivate(card.id)}
               onToggle={() =>
                 setActiveId((prev) =>
                   prev === card.id ? SHOWCASE_CARDS[0].id : card.id

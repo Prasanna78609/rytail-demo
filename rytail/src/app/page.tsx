@@ -28,38 +28,38 @@ const Footer = dynamic(() => import("@/components/Footer"));
 
 export default function Home() {
   return (
-    <main className="min-h-screen w-full bg-white font-primary text-[#090d0b]">
-      <ScrollHeroSection />
+      <main className="min-h-screen w-full overflow-x-clip bg-white font-primary text-[#090d0b]">
+        <ScrollHeroSection />
 
-      <TrustStrip />
+        <TrustStrip />
 
-      <PlatformOverview />
+        <PlatformOverview />
 
-      <OutcomesShowcase />
+        <OutcomesShowcase />
 
-      <div id="how-it-works">
-        <PlatformFlowSection />
-      </div>
+        <div id="how-it-works">
+          <PlatformFlowSection />
+        </div>
 
-      <ShowcaseSection />
+        <ShowcaseSection />
 
-      <div id="industries">
-        <IndustryStackSection />
-      </div>
+        <div id="industries">
+          <IndustryStackSection />
+        </div>
 
-      <MetricsStrip />
+        <MetricsStrip />
 
-      <div id="stories">
-        <CaseStudiesSection />
-      </div>
+        <div id="stories">
+          <CaseStudiesSection />
+        </div>
 
-      <SecurityStrip />
+        <SecurityStrip />
 
-      <FAQSection />
+        <FAQSection />
 
-      <FinalCTA />
+        <FinalCTA />
 
-      <Footer />
-    </main>
-  );
+        <Footer />
+      </main>
+      );
 }
